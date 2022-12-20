@@ -6,11 +6,39 @@ import (
 )
 
 func GetTask(c *fiber.Ctx) error {
-	return c.SendString("A Single Task")
+	id := c.Context().QueryArgs().GetUintOrZero("id")
+
+	result, err := database.Gettask(id)
+	if err != nil {
+		return c.Status(500).JSON(&fiber.Map{
+			"data":    nil,
+			"success": false,
+			"message": err,
+		})
+	}
+
+	return c.Status(200).JSON(&fiber.Map{
+		"data":    result,
+		"success": true,
+		"message": "",
+	})
 }
 
 func GetAllTasks(c *fiber.Ctx) error {
-	return c.SendString("ALL Tasks")
+	result, err := database.GetallTasks()
+	if err != nil {
+		return c.Status(500).JSON(&fiber.Map{
+			"data":    nil,
+			"success": false,
+			"message": err,
+		})
+	}
+
+	return c.Status(200).JSON(&fiber.Map{
+		"data":    result,
+		"success": true,
+		"message": "All Tasks",
+	})
 }
 
 func AddTask(c *fiber.Ctx) error {
@@ -39,7 +67,7 @@ func AddTask(c *fiber.Ctx) error {
 	c.Status(200).JSON(&fiber.Map{
 		"data":    result,
 		"success": true,
-		"message": "",
+		"message": "Task added!",
 	})
 	return nil
 }

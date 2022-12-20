@@ -20,11 +20,11 @@ func main() {
 
 	app.Get("/list", routes.GetAllTasks) //Get endpoint for fetching all the tasks.
 
-	app.Get("/list/id", routes.GetTask) //Get endpoint for fetching a single task.
+	app.Get("/list/?id=", routes.GetTask) //Get endpoint for fetching a single task.
 
 	app.Post("/list", routes.AddTask) //Post endpoint for add a new task.
 
-	app.Delete("/list/id", routes.DeleteTask) //Delete endpoint for removing an existing task.
+	app.Delete("/list/?id=", routes.DeleteTask) //Delete endpoint for removing an existing task.
 
 	app.Listen(":8000")
 }

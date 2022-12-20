@@ -21,7 +21,6 @@ const (
 	dbname   = "todo-list-api"
 )
 
-// dsn := "host=localhost user=postgres password=Sid@2002 dbname=todo-list-api port=5050 sslmode=disable TimeZone=Asia/Shanghai"
 var dsn string = fmt.Sprintf("host=%s port=%d user=%s "+
 	"password=%s dbname=%s sslmode=disable TimeZone=Asia/Shanghai",
 	host, port, user, password, dbname)
@@ -47,4 +46,29 @@ func CreateTask(name string, status string) (Task, error) {
 	db.Create(&Task{Name: name, Status: status})
 
 	return newTask, nil
+}
+
+func GetallTasks() ([]Task, error) {
+	var tasks []Task
+
+	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	if err != nil {
+		return tasks, err
+	}
+
+	db.Find(&tasks)
+
+	return tasks, nil
+}
+
+func Gettask(id int) (Task, error) {
+	var task Task
+
+	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	if err != nil {
+		return task, err
+	}
+
+	db.Where("ID = &id").Find(&task)
+	return task, nil
 }
