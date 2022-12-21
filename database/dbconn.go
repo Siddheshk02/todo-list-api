@@ -61,7 +61,7 @@ func GetallTasks() ([]Task, error) {
 	return tasks, nil
 }
 
-func Gettask(id int) (Task, error) {
+func Gettask(id string) (Task, error) {
 	var task Task
 
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
@@ -69,6 +69,32 @@ func Gettask(id int) (Task, error) {
 		return task, err
 	}
 
-	db.Where("ID = &id").Find(&task)
+	db.Where("ID = ?", id).First(&task)
 	return task, nil
+}
+
+func Deletetask(id string) error {
+	var task Task
+
+	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+
+	if err != nil {
+		return err
+	}
+
+	db.Where("ID = ?", id).Delete(&task)
+	return nil
+
+}
+
+func Updatetask(name string, status string, id string) (Task, error) {
+	var newTask = Task{Name: name, Status: status}
+
+	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	if err != nil {
+		return newTask, err
+	}
+
+	db.Where("ID = ?", id).Updates(&Task{Name: newTask.Name, Status: newTask.Status})
+	return newTask, nil
 }

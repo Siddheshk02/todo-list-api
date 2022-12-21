@@ -14,17 +14,21 @@ func main() {
 		panic(dbErr)
 	}
 
-	app.Get("/", func(c *fiber.Ctx) error {
+	list := app.Group("/list")
+
+	list.Get("/", func(c *fiber.Ctx) error {
 		return c.SendString("Welcome to the Todo-List-API Tutorial :)")
 	}) // "/" - Default route to return the given string.
 
-	app.Get("/list", routes.GetAllTasks) //Get endpoint for fetching all the tasks.
+	list.Get("/tasks", routes.GetAllTasks) //Get endpoint for fetching all the tasks.
 
-	app.Get("/list/?id=", routes.GetTask) //Get endpoint for fetching a single task.
+	list.Get("/task/:id", routes.GetTask) //Get endpoint for fetching a single task.
 
-	app.Post("/list", routes.AddTask) //Post endpoint for add a new task.
+	list.Post("/add_task", routes.AddTask) //Post endpoint for add a new task.
 
-	app.Delete("/list/?id=", routes.DeleteTask) //Delete endpoint for removing an existing task.
+	list.Delete("/delete_task/:id", routes.DeleteTask) //Delete endpoint for removing an existing task.
+
+	list.Patch("/update_task/:id", routes.UpdateTask) //Patch endpoint for updating an existing task.
 
 	app.Listen(":8000")
 }
