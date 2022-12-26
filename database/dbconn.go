@@ -17,7 +17,7 @@ const (
 	host     = "localhost"
 	port     = 5432
 	user     = "postgres"
-	password = "Sid@2002"
+	password = "password"
 	dbname   = "todo-list-api"
 )
 
