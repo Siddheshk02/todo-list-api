@@ -14,11 +14,12 @@ type Task struct {
 }
 
 const (
-	host     = "localhost"
-	port     = 5432
+	host     = "containers-us-west-114.railway.app"
+	port     = 6670
 	user     = "postgres"
-	password = "password"
-	dbname   = "todo-list-api"
+	password = "aCw059dKsVNyVWXrnxbx"
+	//dbname   = "todo-list-api"
+	dbname = "railway"
 )
 
 var dsn string = fmt.Sprintf("host=%s port=%d user=%s "+
