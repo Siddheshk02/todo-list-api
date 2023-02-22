@@ -19,7 +19,7 @@ func main() {
 	list := app.Group("/list")
 
 	list.Get("/", func(c *fiber.Ctx) error {
-		return c.SendString("Welcome to the Todo-List-API Tutorial :)")
+		return c.SendString("Welcome to the Todo-List-API :)")
 	}) // "/" - Default route to return the given string.
 
 	list.Get("/tasks", routes.GetAllTasks) //Get endpoint for fetching all the tasks.
