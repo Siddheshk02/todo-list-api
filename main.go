@@ -30,5 +30,5 @@ func main() {
 
 	list.Patch("/update_task/:id", routes.UpdateTask) //Patch endpoint for updating an existing task.
 
-	app.Listen("0.0.0.0:8080")
+	app.Listen("0.0.0.0:6670")
 }
