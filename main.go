@@ -1,6 +1,8 @@
 package main
 
 import (
+	"os"
+
 	"github.com/Siddheshk02/todo-list-api/database"
 	"github.com/Siddheshk02/todo-list-api/routes"
 	"github.com/gofiber/fiber/v2"
@@ -30,5 +32,7 @@ func main() {
 
 	list.Patch("/update_task/:id", routes.UpdateTask) //Patch endpoint for updating an existing task.
 
-	app.Listen("0.0.0.0:6670")
+	port := os.Getenv("PORT")
+
+	app.Listen("0.0.0.0:" + port)
 }
